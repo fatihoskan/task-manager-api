@@ -1,0 +1,486 @@
+{
+	"info": {
+		"_postman_id": "02ee0a5a-49ac-409a-804a-5392ff027c93",
+		"name": "TaskApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createuser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code == 200 || pm.response.code == 201 )\r",
+							"{\r",
+							"    var headerValue = pm.response.json().token;\r",
+							"    pm.environment.set(\"token\", headerValue);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Name\",\r\n    \"age\":  35,\r\n    \"email\":   \"testname@taskapp.com\",\r\n    \"password\" : \"test123!\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}users",
+					"host": [
+						"{{url}}users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createtask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"Learn Node js\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}tasks",
+					"host": [
+						"{{url}}tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get my profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}users/me",
+					"host": [
+						"{{url}}users"
+					],
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findSpesificUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}users/610e4f0451bc092b009bf3ab",
+					"host": [
+						"{{url}}users"
+					],
+					"path": [
+						"610e4f0451bc092b009bf3ab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findspesificTask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}tasks/6110117e10a543450ccfc16d",
+					"host": [
+						"{{url}}tasks"
+					],
+					"path": [
+						"6110117e10a543450ccfc16d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gettasks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}tasks?completed=false&limit=10&offset=1&sort=createdAt:desc",
+					"host": [
+						"{{url}}tasks"
+					],
+					"query": [
+						{
+							"key": "completed",
+							"value": "false"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "offset",
+							"value": "1"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt:desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Nezaket\",\r\n    \"age\" : \"66\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}users/me",
+					"host": [
+						"{{url}}users"
+					],
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateTask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"completed\" : true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}tasks/6112db635a6c111fe491e2b2",
+					"host": [
+						"{{url}}tasks"
+					],
+					"path": [
+						"6112db635a6c111fe491e2b2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}users/me",
+					"host": [
+						"{{url}}users"
+					],
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteTask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}tasks/6110102cf7485c50e42a3ad8",
+					"host": [
+						"{{url}}tasks"
+					],
+					"path": [
+						"6110102cf7485c50e42a3ad8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code == 200)\r",
+							"{\r",
+							"    var headerValue = pm.response.json().token;\r",
+							"    pm.environment.set(\"token\", headerValue);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":   \"testname@taskapp.com\",\r\n    \"password\" : \"test123!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}users/login",
+					"host": [
+						"{{url}}users"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}users/logout",
+					"host": [
+						"{{url}}users"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "uploadavatar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "avatar",
+							"type": "file",
+							"src": "/C:/Users/fatih/Desktop/node-course-images/profile-pic.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}users/me/avatar",
+					"host": [
+						"{{url}}users"
+					],
+					"path": [
+						"me",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteavatar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}users/me/avatar",
+					"host": [
+						"{{url}}users"
+					],
+					"path": [
+						"me",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getavatar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}users/6112da7245b7b205d4d6f209/avatar",
+					"host": [
+						"{{url}}users"
+					],
+					"path": [
+						"6112da7245b7b205d4d6f209",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
